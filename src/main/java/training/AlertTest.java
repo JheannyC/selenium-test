@@ -1,5 +1,6 @@
-package treinamento;
+package training;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Alert;
@@ -13,12 +14,17 @@ import static org.junit.Assert.assertEquals;
 @DisplayName("Testing alerts")
 public class AlertTest {
 
+    private final WebDriver driver = new ChromeDriver();
+
+    @BeforeEach
+    void setUp(){
+        driver.manage().window().setSize(new Dimension(1200,720));
+        driver.get("file:///"+ System.getProperty("user.dir") + "/src/main/resources/testPages/componentes.html");
+    }
+
     @Test
     @DisplayName("Should interacts with simple alert")
     void shouldInteractsWithSimpleAlert() {
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().setSize(new Dimension(1200,720));
-        driver.get("file:///"+ System.getProperty("user.dir") + "/src/main/resources/testPages/componentes.html");
 
         driver.findElement(By.id("alert")).click();
         Alert alert = driver.switchTo().alert();
@@ -33,9 +39,6 @@ public class AlertTest {
     @Test
     @DisplayName("Should interacts with confirm alert")
     void shouldInteractsWithConfirmAlert() {
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().setSize(new Dimension(1200,720));
-        driver.get("file:///"+ System.getProperty("user.dir") + "/src/main/resources/testPages/componentes.html");
 
         driver.findElement(By.id("confirm")).click();
         Alert alert = driver.switchTo().alert();
@@ -56,11 +59,8 @@ public class AlertTest {
     @Test
     @DisplayName("Should interacts with prompt alert")
     void shouldInteractsWithPromptAlert() {
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().setSize(new Dimension(1200,720));
-        driver.get("file:///"+ System.getProperty("user.dir") + "/src/main/resources/testPages/componentes.html");
-        driver.findElement(By.id("prompt")).click();
 
+        driver.findElement(By.id("prompt")).click();
         Alert alert = driver.switchTo().alert();
         String numero = "1234";
 

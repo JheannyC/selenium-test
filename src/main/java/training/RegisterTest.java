@@ -1,28 +1,28 @@
-package treinamento;
+package training;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
-
-import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class RegisterTest {
 
-    @Test
-    void register(){
+    private final WebDriver driver = new ChromeDriver();
 
-        WebDriver driver = new ChromeDriver();
+    @BeforeEach
+    void setUp(){
         driver.manage().window().setSize(new Dimension(1200,720));
         driver.get("file:///"+ System.getProperty("user.dir") + "/src/main/resources/testPages/componentes.html");
+    }
+
+    @Test
+    void register(){
 
         driver.findElement(By.id("elementosForm:nome")).sendKeys("Jeane");
         driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Cardoso");
