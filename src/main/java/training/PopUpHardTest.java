@@ -1,30 +1,37 @@
 package training;
 
+import dsl.DSL;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import static org.openqa.selenium.By.tagName;
+
 public class PopUpHardTest {
 
     private final WebDriver driver = new ChromeDriver();
+    private final DSL dsl = new DSL(driver);
 
     @BeforeEach
     void setUp(){
         driver.manage().window().setSize(new Dimension(1200,720));
         driver.get("file:///"+ System.getProperty("user.dir") + "/src/main/resources/testPages/componentes.html");
     }
+    @AfterEach
+    void finish(){
+        driver.quit();
+    }
 
     @Test
     void shouldInteractsWithPopUpHard(){
 
-        driver.findElement(By.id("buttonPopUpHard")).click();
-        driver.switchTo().window( (String) driver.getWindowHandles().toArray()[1]);
-        driver.findElement(By.tagName("textarea")).sendKeys("Certinho");
-        driver.switchTo().window( (String) driver.getWindowHandles().toArray()[0]);
-        driver.findElement(By.tagName("textarea")).sendKeys("Tudo ok!");
-        driver.quit();
+        dsl.clickButton("buttonPopUpHard");
+        dsl.switchPopUp(1);
+        dsl.write(tagName("textarea"),"Certinho");
+        dsl.switchPopUp(0);
+        dsl.write(tagName("textarea"),"Tudo ok!");
     }
 }

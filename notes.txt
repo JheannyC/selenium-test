@@ -1,0 +1,10 @@
+ /*
+     On method "should select()" we can use this for select the combo:
+     combo.selectByIndex(3); or
+     combo.selectByValue("superior");
+
+     On method shouldSearchText() we can use this too for find a text in body
+     //assertTrue(driver.findElement(By.tagName("body")).getText().contains("Campo de Treinamento"));
+
+     //Domain Specific Language - DSL
+ */

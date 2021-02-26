@@ -1,5 +1,7 @@
 package training;
 
+import dsl.DSL;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -7,24 +9,30 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import static org.openqa.selenium.By.tagName;
+
 public class PopUpEasyTest {
     private final WebDriver driver = new ChromeDriver();
+    private final DSL dsl = new DSL(driver);
 
     @BeforeEach
     void setUp(){
         driver.manage().window().setSize(new Dimension(1200,720));
         driver.get("file:///"+ System.getProperty("user.dir") + "/src/main/resources/testPages/componentes.html");
     }
+    @AfterEach
+    void finish(){
+        driver.quit();
+    }
 
     @Test
     void shouldInteractsWithPopUp(){
 
-        driver.findElement(By.id("buttonPopUpEasy")).click();
-        driver.switchTo().window("Popup");
-        driver.findElement(By.tagName("textarea")).sendKeys("Deu certo!");
+        dsl.clickButton("buttonPopUpEasy");
+        dsl.switchPopUp("Popup");
+        dsl.write(tagName("textarea"),"Deu certo!");
         driver.close();
-        driver.switchTo().window("");
-        driver.findElement(By.tagName("textarea")).sendKeys("It works!");
-        driver.quit();
+        dsl.switchPopUp("");
+        dsl.write(tagName("textarea"),"It works!");
     }
 }

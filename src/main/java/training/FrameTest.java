@@ -1,5 +1,7 @@
 package training;
 
+import dsl.DSL;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,25 +17,28 @@ import static org.junit.Assert.assertEquals;
 public class FrameTest {
 
     private final WebDriver driver = new ChromeDriver();
+    private final DSL dsl = new DSL(driver);
 
     @BeforeEach
     void setUp(){
         driver.manage().window().setSize(new Dimension(1200,720));
         driver.get("file:///"+ System.getProperty("user.dir") + "/src/main/resources/testPages/componentes.html");
     }
+    @AfterEach
+    void finish(){
+        driver.quit();
+    }
 
     @Test
     void shouldInteractsWithFrames(){
 
-        driver.switchTo().frame("frame1");
-        driver.findElement(By.id("frameButton")).click();
-        Alert alert = driver.switchTo().alert();
-        String text = alert.getText();
+        dsl.switchFrame("frame1");
+        dsl.clickButton("frameButton");
+        dsl.switchAlert();
+        String text = dsl.getAlertText();
         assertEquals("Frame OK!", text);
-        alert.accept();
-
-        driver.switchTo().defaultContent();
-        driver.findElement(By.id("elementosForm:nome")).sendKeys(text);
-        driver.quit();
+        dsl.acceptAlert();
+        dsl.defaultContent();
+        dsl.write("elementosForm:nome",text);
     }
 }
