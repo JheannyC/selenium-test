@@ -4,6 +4,7 @@ import dsl.DSL;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -29,9 +30,12 @@ public class PopUpHardTest {
     void shouldInteractsWithPopUpHard(){
 
         dsl.clickButton("buttonPopUpHard");
-        dsl.switchPopUp(1);
-        dsl.write(tagName("textarea"),"Certinho");
-        dsl.switchPopUp(0);
-        dsl.write(tagName("textarea"),"Tudo ok!");
+        dsl.changeWindow((String) driver.getWindowHandles().toArray()[1]);
+        dsl.write(By.tagName("textarea"), "Deu certo?");
+        dsl.changeWindow((String) driver.getWindowHandles().toArray()[0]);
+        dsl.write(By.tagName("textarea"), "e agora?");
+
     }
+
 }
+

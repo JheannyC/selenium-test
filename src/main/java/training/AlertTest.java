@@ -32,10 +32,8 @@ public class AlertTest {
     void shouldInteractsWithSimpleAlert() {
 
         dsl.clickButton("alert");
-        dsl.switchAlert();
-        String text = dsl.getAlertText();
+        String text = dsl.getAlertTextAccept();
         assertEquals("Alert Simples", text);
-        dsl.acceptAlert();
         dsl.write("elementosForm:nome", text);
     }
 
@@ -45,18 +43,12 @@ public class AlertTest {
     void shouldInteractsWithConfirmAlert() {
 
         dsl.clickButton("confirm");
-        dsl.switchAlert();
-        assertEquals("Confirm Simples", dsl.getAlertText());
-        dsl.acceptAlert();
-        assertEquals("Confirmado", dsl.getAlertText());
-        dsl.acceptAlert();
+        assertEquals("Confirm Simples", dsl.getAlertTextAccept());
+        assertEquals("Confirmado", dsl.getAlertTextAccept());
 
         dsl.clickButton("confirm");
-        dsl.switchAlert();
-        assertEquals("Confirm Simples", dsl.getAlertText());
-        dsl.dismissAlert();
-        assertEquals("Negado", dsl.getAlertText());
-        dsl.acceptAlert();
+        assertEquals("Confirm Simples", dsl.getAlertTextDismiss());
+        assertEquals("Negado", dsl.getAlertTextAccept());
     }
 
     @Test
@@ -64,14 +56,10 @@ public class AlertTest {
     void shouldInteractsWithPromptAlert() {
 
         dsl.clickButton("prompt");
-        dsl.switchAlert();
         String number = "1234";
         assertEquals("Digite um numero", dsl.getAlertText());
-        dsl.sendAlertValue(number);
-        dsl.acceptAlert();
-        assertEquals("Era " + number +"?", dsl.getAlertText());
-        dsl.acceptAlert();
-        assertEquals(":D", dsl.getAlertText());
-        dsl.acceptAlert();
+        dsl.writeAlert("1234");
+        assertEquals("Era " + number +"?", dsl.getAlertTextAccept());
+        assertEquals(":D", dsl.getAlertTextAccept());
     }
 }

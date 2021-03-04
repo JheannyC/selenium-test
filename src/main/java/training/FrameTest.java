@@ -32,13 +32,11 @@ public class FrameTest {
     @Test
     void shouldInteractsWithFrames(){
 
-        dsl.switchFrame("frame1");
+        dsl.enterFrame("frame1");
         dsl.clickButton("frameButton");
-        dsl.switchAlert();
-        String text = dsl.getAlertText();
+        String text = dsl.getAlertTextAccept();
         assertEquals("Frame OK!", text);
-        dsl.acceptAlert();
-        dsl.defaultContent();
+        dsl.exitFrame();
         dsl.write("elementosForm:nome",text);
     }
 }

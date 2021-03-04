@@ -1,6 +1,7 @@
 package training;
 
 import dsl.DSL;
+import dsl.FieldTrainingPage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,11 +25,13 @@ public class BasicElementsTest {
 
     private final WebDriver driver = new ChromeDriver();
     private final DSL dsl = new DSL(driver);
+    private FieldTrainingPage page;
 
     @BeforeEach
     void setUp(){
         driver.manage().window().setSize(new Dimension(1200,720));
         driver.get("file:///"+ System.getProperty("user.dir") + "/src/main/resources/testPages/componentes.html");
+        page = new FieldTrainingPage(driver);
     }
     @AfterEach
     void finish(){
@@ -39,7 +42,7 @@ public class BasicElementsTest {
     @DisplayName("Should write a text in a text field")
     void shouldWriteTextField (){
 
-        dsl.write("elementosForm:nome", "Teste de escrita");
+        page.setName( "Teste de escrita");
         assertEquals("Teste de escrita", dsl.getFieldValue("elementosForm:nome"));
     }
 
@@ -47,7 +50,7 @@ public class BasicElementsTest {
     @DisplayName("Should write a text in text area")
     void shoulWritTextArea(){
 
-        dsl.write("elementosForm:sugestoes", "testing");
+        page.setSugestion("testing");
         assertEquals("testing", dsl.getFieldValue("elementosForm:sugestoes"));
     }
 
@@ -55,7 +58,7 @@ public class BasicElementsTest {
     @DisplayName("Should mark an option in radio button")
     void shoulMarkRadioButton(){
 
-        dsl.clickRadio("elementosForm:sexo:0");
+        page.setMaleSex();
         assertTrue(dsl.isRadioMarked("elementosForm:sexo:0"));
     }
 
@@ -63,7 +66,7 @@ public class BasicElementsTest {
     @DisplayName("Should mark an option in check box")
     void shoulMarkCheckBox(){
 
-        dsl.clickRadio("elementosForm:comidaFavorita:2");
+        page.favoriteFoodPizza();
         assertTrue(dsl.isRadioMarked("elementosForm:comidaFavorita:2"));
     }
 
@@ -71,7 +74,7 @@ public class BasicElementsTest {
     @DisplayName("Should select an option")
     void shoulSelect(){
 
-        dsl.selectCombo("elementosForm:escolaridade", "Mestrado");
+        page.setScholarity("Mestrado");
         assertEquals("Mestrado", dsl.getComboValue("elementosForm:escolaridade"));
     }
 
@@ -79,38 +82,24 @@ public class BasicElementsTest {
     @DisplayName("Should select an option")
     void shoulVerifyComboValues(){
 
-        WebElement element = driver.findElement(By.id("elementosForm:escolaridade"));
-        Select combo = new Select(element);
-        List<WebElement> options = combo.getOptions();
-
-        assertEquals(8, options.size());
-        boolean find = false;
-        for(WebElement option : options){
-            if(option.getText().equals("Mestrado")){
-                find = true;
-                break;
-            }
-        }
-        assertTrue(find);
+        assertEquals(8, dsl.getComboOptions("elementosForm:escolaridade"));
+        assertTrue(dsl.verifyComboOption("elementosForm:escolaridade", "Mestrado"));
     }
 
     @Test
-    @DisplayName("Should select an option")
+    @DisplayName("Should select multiple options")
     void shoulVerifyComboMultiple() {
 
         dsl.selectCombo("elementosForm:esportes", "Natacao");
         dsl.selectCombo("elementosForm:esportes", "Corrida");
 
-        WebElement element = driver.findElement(By.id("elementosForm:esportes"));
-        Select combo = new Select(element);
-        List<WebElement> allSelectedOptions = combo.getAllSelectedOptions();
-
+        List<String> allSelectedOptions = dsl.getComboValues("elementosForm:esportes");
         assertEquals(2, allSelectedOptions.size());
 
-        combo.deselectByVisibleText("Corrida");
-        allSelectedOptions = combo.getAllSelectedOptions();
-
+        dsl.deselectCombo("elementosForm:esportes", "Corrida");
+        allSelectedOptions = dsl.getComboValues("elementosForm:esportes");
         assertEquals(1, allSelectedOptions.size());
+        assertTrue(allSelectedOptions.contains("Natacao"));
     }
 
     @Test

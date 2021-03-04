@@ -29,10 +29,10 @@ public class PopUpEasyTest {
     void shouldInteractsWithPopUp(){
 
         dsl.clickButton("buttonPopUpEasy");
-        dsl.switchPopUp("Popup");
-        dsl.write(tagName("textarea"),"Deu certo!");
+        dsl.changeWindow("Popup");
+        dsl.write(By.tagName("textarea"), "Deu certo?");
         driver.close();
-        dsl.switchPopUp("");
-        dsl.write(tagName("textarea"),"It works!");
+        dsl.changeWindow("");
+        dsl.write(By.tagName("textarea"), "e agora?");
     }
 }
