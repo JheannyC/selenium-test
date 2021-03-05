@@ -11,7 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import static org.openqa.selenium.By.tagName;
 
-public class PopUpEasyTest {
+public class PopUpsTest {
     private final WebDriver driver = new ChromeDriver();
     private final DSL dsl = new DSL(driver);
 
@@ -26,7 +26,7 @@ public class PopUpEasyTest {
     }
 
     @Test
-    void shouldInteractsWithPopUp(){
+    void shouldInteractsWithEasyPopUp(){
 
         dsl.clickButton("buttonPopUpEasy");
         dsl.changeWindow("Popup");
@@ -34,5 +34,15 @@ public class PopUpEasyTest {
         driver.close();
         dsl.changeWindow("");
         dsl.write(By.tagName("textarea"), "e agora?");
+    }
+    @Test
+    void shouldInteractsWithPopUpHard(){
+
+        dsl.clickButton("buttonPopUpHard");
+        dsl.changeWindow((String) driver.getWindowHandles().toArray()[1]);
+        dsl.write(By.tagName("textarea"), "Deu certo?");
+        dsl.changeWindow((String) driver.getWindowHandles().toArray()[0]);
+        dsl.write(By.tagName("textarea"), "e agora?");
+
     }
 }

@@ -5,10 +5,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import static org.junit.Assert.assertEquals;
@@ -30,6 +30,7 @@ public class FrameTest {
     }
 
     @Test
+    @DisplayName("Should interacts with frames")
     void shouldInteractsWithFrames(){
 
         dsl.enterFrame("frame1");
@@ -39,4 +40,16 @@ public class FrameTest {
         dsl.exitFrame();
         dsl.write("elementosForm:nome",text);
     }
+
+    @Test
+    @DisplayName("Should interacts with hidden frame")
+    void hiddenFrame(){
+        WebElement frame = driver.findElement(By.id("frame2"));
+        dsl.executeJS("window.scrollBy(0, arguments[0])", frame.getLocation().y);
+        dsl.enterFrame("frame2");
+        dsl.clickButton("frameButton");
+        String message = dsl.getAlertTextAccept();
+        assertEquals("Frame OK!", message);
+    }
+
 }
