@@ -1,6 +1,6 @@
 package dsl;
 
-import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class FieldTrainingPage {
@@ -50,34 +50,36 @@ public class FieldTrainingPage {
         dsl.clickButton("elementosForm:cadastrar");
     }
     public String getFormResult(){
-        return  dsl.getText("resultado");
+        return  dsl.getText(By.xpath("//*[@id='resultado']/span"));
     }
     public String getText(){
-        return dsl.getText("descNome");
+
+        return  dsl.getText(By.xpath("//*[@id='descNome']/span"));
+
     }
 
     public String getSurnameText() {
-        return dsl.getText("descSobrenome");
+        return  dsl.getText(By.xpath("//*[@id='descSobrenome']/span"));
     }
 
     public String getSexText() {
-        return dsl.getText("descSexo");
+        return  dsl.getText(By.xpath("//*[@id='descSexo']/span"));
     }
 
     public String getEscholarityText() {
-        return dsl.getText("descEscolaridade");
+        return  dsl.getText(By.xpath("//*[@id='descEscolaridade']/span"));
     }
 
     public String getFoodText() {
-        return dsl.getText("descComida");
+        return  dsl.getText(By.xpath("//*[@id='descComida']/span"));
     }
 
     public String getSportText() {
-        return dsl.getText("descEsportes");
+        return  dsl.getText(By.xpath("//*[@id='descEsportes']/span"));
     }
 
     public String getDescriptionText() {
-        return dsl.getText("descSugestoes");
+        return  dsl.getText(By.xpath("//*[@id='descSugestoes']/span"));
     }
     public void switchAlert(WebDriver driver){
         driver.switchTo().alert();

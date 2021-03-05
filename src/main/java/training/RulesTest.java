@@ -50,14 +50,14 @@ public class RulesTest {
         page.setSugestion("I'm registering an user");
         page.register();
 
-        assertTrue(page.getFormResult().startsWith("Cadastrado!"));
-        assertTrue(page.getText().endsWith("Jeane"));
-        assertEquals("Sobrenome: Cardoso", page.getSurnameText());
-        assertEquals("Sexo: Feminino", page.getSexText());
-        assertEquals("Escolaridade: superior", page.getEscholarityText());
-        assertEquals("Comida: Carne Frango Pizza", page.getFoodText());
-        assertEquals("Esportes: Natacao Corrida", page.getSportText());
-        assertEquals("Sugestoes: I'm registering an user", page.getDescriptionText());
+        assertEquals("Cadastrado!", page.getFormResult());
+        assertEquals("Jeane", page.getText());
+        assertEquals("Cardoso", page.getSurnameText());
+        assertEquals("Feminino", page.getSexText());
+        assertEquals("superior", page.getEscholarityText());
+        assertEquals("Carne Frango Pizza", page.getFoodText());
+        assertEquals("Natacao Corrida", page.getSportText());
+        assertEquals("I'm registering an user", page.getDescriptionText());
     }
 
     @Test
