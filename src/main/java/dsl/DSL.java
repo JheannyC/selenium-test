@@ -149,4 +149,42 @@ public class DSL {
         return js.executeScript(cmd, param);
 
     }
+
+    public void clickButtonTable(String searchColumn, String value, String buttonColumn, String tableId){
+        WebElement table = driver.findElement(By.xpath("//*[@id='elementosForm:tableUsuarios']"));
+        int columnId = getColumnIndex(searchColumn, table);
+        int lineId = getLineIndex(value, table, columnId);
+        int columnButtonId = getColumnIndex(buttonColumn, table);
+
+        WebElement cel = table.findElement(By.xpath(".//tr["+lineId+"]/td["+columnButtonId+"]"));
+        cel.findElement(By.xpath(".//input")).click();
+    }
+
+    private int getLineIndex(String value, WebElement table, int columnId) {
+        List<WebElement> lines = table.findElements(By.xpath("./tbody/tr/td["+ columnId +"]"));
+
+        int lineId = -1;
+        for (int i = 0; i < lines.size(); i++){
+            if(lines.get(i).getText().equals(value)){
+                lineId = i+1;
+                break;
+            }
+
+        }
+        return lineId;
+    }
+
+    private int getColumnIndex(String column, WebElement table) {
+        List<WebElement> columns = table.findElements(By.xpath(".//th"));
+        int columnId = -1;
+        for (int i = 0; i < columns.size(); i++){
+            if(columns.get(i).getText().equals(column)){
+                columnId = i+1;
+                break;
+            }
+
+        }
+        return columnId;
+    }
+
 }

@@ -111,4 +111,9 @@ public class RulesTest {
         assertEquals("Voce faz esporte ou nao?", dsl.getAlertTextAccept());
     }
 
+    @Test
+    void shouldClickTableButton(){
+        dsl.clickButtonTable("Nome", "Maria", "Botao", "elementosForm:tableUsuarios");
+    }
+
 }
