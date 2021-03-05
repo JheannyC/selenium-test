@@ -38,8 +38,10 @@ public class FieldTrainingPage {
     public void setScholarity(String scholarity){
         dsl.selectCombo("elementosForm:escolaridade", scholarity);
     }
-    public void setSport(String sport){
-        dsl.selectCombo("elementosForm:esportes", sport);
+    public void setSport(String... sports){
+        for (String sport:sports){
+            dsl.selectCombo("elementosForm:esportes", sport);
+        }
     }
     public void setSugestion(String sugestion){
         dsl.write("elementosForm:sugestoes",sugestion);

@@ -127,6 +127,15 @@ public class BasicElementsTest {
         assertEquals("Cuidado onde clica, muitas armadilhas...", dsl.getText(className("facilAchar")));
     }
 
+    @Test
+    @DisplayName("Testint with Javascript")
+    void jsTest(){
+        dsl.executeJS("document.getElementById('elementosForm:nome').value = 'Escrita com js'");
+
+        WebElement element = driver.findElement(By.id("elementosForm:nome"));
+        dsl.executeJS("arguments[0].style.border = arguments[1]",element, "solid 4px red");
+    }
+
 }
 
 
